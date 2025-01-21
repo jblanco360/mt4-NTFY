@@ -71,9 +71,21 @@ private:
    }
 
    void              currentUpdates() {
-      double currentBalanceStatus = AccountBalance();
-     str += "Current Account Status:\n";
-     
+      //double currentBalance = AccountBalance();
+      double currentBalance = 1000.0;
+      double diff;
+      if(currentBalance == account) {
+         str += "No trades for the day.\n";
+      } else if(currentBalance > account) {
+         diff = currentBalance - account;
+         str += "Today's financial report reveals that the automated system has yielded profitable returns.\n";
+         str += "Today's Profit: $" + FormatCurrency(diff);
+      } else {
+         diff = currentBalance - account;
+         str += "Analysis indicate a downturn in profitability.\n";
+         str += "Today's difference: $" + FormatCurrency(diff);
+      }
+      str += "Current Account Status:\n";
    }
 
    void              sendMessage() {
