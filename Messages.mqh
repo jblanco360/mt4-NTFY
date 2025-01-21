@@ -78,6 +78,7 @@ private:
          str += "No trades for the day.\n";
       } else if(currentBalance > account) {
          diff = currentBalance - account;
+         header += "Attach: https://raw.githubusercontent.com/jblanco360/mt4-NTFY/refs/heads/master/pictures/positive.png \n";
          str += "Today's financial report reveals that the automated system has yielded profitable returns.\n";
          str += "Today's Profit: $" + FormatCurrency(diff);
       } else {
@@ -156,7 +157,7 @@ public:
       header = "Title: Good Morning E & J Capital (" + trade_mode + ")\n";
       header += tags;
       str = "Your daily updates are as follows: \n";
-      statusUpdates();
+      currentUpdates();
       sendMessage();
    }
 
