@@ -71,22 +71,15 @@ private:
    }
 
    void              currentUpdates() {
-      //double currentBalance = AccountBalance();
-      double currentBalance = 1000.0;
-      double diff;
-      if(currentBalance == account) {
-         str += "No trades for the day.\n";
-      } else if(currentBalance > account) {
+         double diff;
+         double currentBalance = AccountBalance();
+         
          diff = currentBalance - account;
-         header += "Attach: https://raw.githubusercontent.com/jblanco360/mt4-NTFY/refs/heads/master/pictures/positive.png \n";
-         str += "Today's financial report reveals that the automated system has yielded profitable returns.\n";
-         str += "Today's Profit: $" + FormatCurrency(diff);
-      } else {
-         diff = currentBalance - account;
-         str += "Analysis indicate a downturn in profitability.\n";
+         str += "Current Account Status:\n";
+         str += "Account Balance: $" + FormatCurrency(currentBalance) + "\n";
+         str += "Account Equity: $" + FormatCurrency(AccountEquity()) + "\n";
          str += "Today's difference: $" + FormatCurrency(diff);
-      }
-      str += "Current Account Status:\n";
+   
    }
 
    void              sendMessage() {
@@ -144,19 +137,19 @@ public:
    }
 
    void              dailyUpdate() {
-      tags = "Tags: sunrise_over_mountains\n";
-      header = "Title: Good Morning E & J Capital (" + trade_mode + ")\n";
+      tags = "Tags: pager\n";
+      header = "Title: After Trade Update \n";
       header += tags;
-      str = "Your daily updates are as follows: \n";
+      str = "Your updates are as follows: \n";
       statusUpdates();
       sendMessage();
    }
 
    void              currentBalanceStatus() {
-      tags = "Tags: sunrise_over_mountains\n";
-      header = "Title: Good Morning E & J Capital (" + trade_mode + ")\n";
+      tags = "Tags: pager\n";
+      header = "Title: After Trade Update\n";
       header += tags;
-      str = "Your daily updates are as follows: \n";
+      str = "Your updates are as follows: \n";
       currentUpdates();
       sendMessage();
    }

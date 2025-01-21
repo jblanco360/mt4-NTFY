@@ -16,31 +16,67 @@ Messages ntfy(NTFY_TOPIC);
 //Time Units
 int min = 0;
 
-int OnInit()
-  {
+int number_of_trades = 0;
+
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int OnInit() {
 //---
-   
 //---
    ntfy.init("Live");
    return(INIT_SUCCEEDED);
-  }
+}
+
+
 //+------------------------------------------------------------------+
 //| Expert deinitialization function                                 |
 //+------------------------------------------------------------------+
-void OnDeinit(const int reason)
-  {
+void OnDeinit(const int reason) {
 //---
+}
+
+//+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
+int getTradeCount() {
+   int count = 0;
+   if(OrdersTotal() == 0) {
+      return 0;
+   } else {
+      for(int i = 0; i < OrdersTotal(); i++) {
+         count++;
+      }
+      
+   }
    
-  }
+   return count;
+}
 //+------------------------------------------------------------------+
 //| Expert tick function                                             |
 //+------------------------------------------------------------------+
-void OnTick()
-  {
+void OnTick() {
 //---
-
-   ntfy.currentBalanceStatus();
+   double getCount = getTradeCount();
    
+   if(number_of_trades != getCount)
+   {
+      if(getCount > number_of_trades)
+      {
+         
+         number_of_trades = getCount;
+      }
+      else
+      {
+      
+         ntfy.currentBalanceStatus();
+         number_of_trades = getCount;
+      
+      }
+      
    
-  }
+   }
+   
+}
 //+------------------------------------------------------------------+
