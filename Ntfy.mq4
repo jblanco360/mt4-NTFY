@@ -72,6 +72,7 @@ void OnTick() {
       
          ntfy.currentBalanceStatus();
          number_of_trades = getCount;
+         
       
       }
       

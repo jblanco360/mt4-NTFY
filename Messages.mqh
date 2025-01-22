@@ -79,7 +79,7 @@ private:
          str += "Account Balance: $" + FormatCurrency(currentBalance) + "\n";
          str += "Account Equity: $" + FormatCurrency(AccountEquity()) + "\n";
          str += "Today's difference: $" + FormatCurrency(diff);
-   
+         account = currentBalance;
    }
 
    void              sendMessage() {
