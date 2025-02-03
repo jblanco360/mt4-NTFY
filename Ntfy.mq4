@@ -9,6 +9,7 @@
 //+------------------------------------------------------------------+
 #include "Messages.mqh";
 
+//input string NTFY_TOPIC = "https://ntfy.sh/EandJDebug";
 input string NTFY_TOPIC = "https://ntfy.sh/DragonForceFx";
 
 Messages ntfy(NTFY_TOPIC);
@@ -46,11 +47,13 @@ int getTradeCount() {
       return 0;
    } else {
       for(int i = 0; i < OrdersTotal(); i++) {
-         count++;
+         if(OrderSelect(i,SELECT_BY_POS)) {
+            if(OrderType() == OP_BUY || OrderType() == OP_SELL) {
+               count++;
+            }
+         }
       }
-      
    }
-   
    return count;
 }
 //+------------------------------------------------------------------+
@@ -58,26 +61,14 @@ int getTradeCount() {
 //+------------------------------------------------------------------+
 void OnTick() {
 //---
-   double getCount = getTradeCount();
-   
-   if(number_of_trades != getCount)
-   {
-      if(getCount > number_of_trades)
-      {
-         
+   int getCount = getTradeCount();
+   if(number_of_trades != getCount) {
+      if(getCount > number_of_trades) {
          number_of_trades = getCount;
-      }
-      else
-      {
-      
+      } else {
          ntfy.currentBalanceStatus();
          number_of_trades = getCount;
-         
-      
       }
-      
-   
    }
-   
 }
 //+------------------------------------------------------------------+
