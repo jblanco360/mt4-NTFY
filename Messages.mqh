@@ -38,6 +38,7 @@ private:
    char              data[],result[];
    string            result_headers;
    string            trade_mode;
+   double            todaysDiff;
 
 
    enum emoji {
@@ -70,16 +71,20 @@ private:
       account = AccountBalance();
    }
 
+
+
    void              currentUpdates() {
-         double diff;
-         double currentBalance = AccountBalance();
-         
-         diff = currentBalance - account;
-         str += "Current Account Status:\n";
-         str += "Account Balance: $" + FormatCurrency(currentBalance) + "\n";
-         str += "Account Equity: $" + FormatCurrency(AccountEquity()) + "\n";
-         str += "Today's difference: $" + FormatCurrency(diff);
-         account = currentBalance;
+      double diff;
+      double currentBalance = AccountBalance();
+      diff = currentBalance - account;
+      todaysDiff += diff;
+      str += "Current Account Status:\n";
+      str += "Account Balance: $" + FormatCurrency(currentBalance) + "\n";
+      str += "Account Equity: $" + FormatCurrency(AccountEquity()) + "\n";
+      str += "Today's difference: $" + FormatCurrency(diff) + "\n";
+      str += "Day's Difference: $" + FormatCurrency(todaysDiff) + "\n";
+      account = currentBalance;
+      
    }
 
    void              sendMessage() {
@@ -121,6 +126,8 @@ public:
       this_address = address;
       account =  AccountBalance();
    }
+
+
 
    void              init(string mode) {
       int    res;     // To receive the operation execution result
@@ -169,6 +176,10 @@ public:
       header += tags;
       str = "Order Deleted per spread of " + DoubleToString(spread,0) +"\n";
       sendMessage();
+   }
+
+   void              resetDailyProfit() {
+      todaysDiff = 0;
    }
 
 

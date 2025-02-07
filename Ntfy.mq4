@@ -8,14 +8,16 @@
 //| Expert initialization function                                   |
 //+------------------------------------------------------------------+
 #include "Messages.mqh";
+string version = 1.2;
 
-//input string NTFY_TOPIC = "https://ntfy.sh/EandJDebug";
-input string NTFY_TOPIC = "https://ntfy.sh/DragonForceFx";
+input string NTFY_TOPIC = "https://ntfy.sh/EandJDebug";
+//input string NTFY_TOPIC = "https://ntfy.sh/DragonForceFx";
 
 Messages ntfy(NTFY_TOPIC);
 
 //Time Units
 int min = 0;
+int day = 0;
 
 int number_of_trades = 0;
 
@@ -27,6 +29,7 @@ int OnInit() {
 //---
 //---
    ntfy.init("Live");
+   Alert("Version 1.2 Initiated");
    return(INIT_SUCCEEDED);
 }
 
@@ -69,6 +72,14 @@ void OnTick() {
          ntfy.currentBalanceStatus();
          number_of_trades = getCount;
       }
+   }
+   
+   if(day != Day())
+   {
+      ntfy.resetDailyProfit();
+      day = Day();
+   
+   
    }
 }
 //+------------------------------------------------------------------+
